@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import styled from 'styled-components'
+
+import { useCards } from '../../api/useCards'
+import { Card } from '../../ui/Card/Card'
 
 const MainHeaderContainer = styled.div`
   display: flex;
@@ -25,9 +28,33 @@ const TitleSpan = styled.p`
   margin-top: 48px;
 `
 
-const Grid = styled.div``
+const Grid = styled.div`
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+`
 
 export const Main = () => {
+  const { cards, size, setSize, incSize } = useCards()
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const handleScroll = useCallback(() => {
+    const startPagination =
+      document.documentElement.scrollHeight - window.innerHeight - 50
+
+    if (window.scrollY >= startPagination) {
+      incSize()
+    }
+  }, [])
+
   return (
     <main>
       <MainHeaderContainer>
@@ -36,7 +63,17 @@ export const Main = () => {
           Find the latest products for the biggest fans of the iconic saga.
         </TitleSpan>
       </MainHeaderContainer>
-      <Grid></Grid>
+      <Grid>
+        {cards?.map((item) => (
+          <Card
+            id={item.id}
+            image={item.image}
+            name={item.name}
+            shortDescription={item.shortDescription}
+            price={item.price}
+          />
+        ))}
+      </Grid>
     </main>
   )
 }
