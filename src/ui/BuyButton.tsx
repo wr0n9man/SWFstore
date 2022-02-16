@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { colors } from '../constants'
+import { breakpoints, colors } from '../constants'
 
 const Button = styled.button`
   font-size: 1.5rem;
@@ -15,12 +15,17 @@ const Button = styled.button`
   box-shadow: 0px 4px 24px ${colors.shadow};
   border: none;
 
-  padding: 22px 32px;
+  padding: 1.375rem 2rem;
   border-radius: 50px;
 
   &:hover {
     background: ${colors.buttonHover};
     cursor: pointer;
+  }
+
+  @media (max-width: ${breakpoints.SM}px) {
+    font-size: 1.125rem;
+    padding: 1rem 1.5rem;
   }
 `
 
