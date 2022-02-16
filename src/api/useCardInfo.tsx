@@ -9,7 +9,7 @@ interface ISWRProps {
 }
 
 export const useCard = (id: number) => {
-  const { data, error } = useSWR<ISWRProps>(urls.product(id), fetcher)
+  const { data } = useSWR<ISWRProps>(urls.product(id), fetcher)
 
   return data
 }

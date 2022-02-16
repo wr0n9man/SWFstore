@@ -1,8 +1,7 @@
-import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useCard } from '../../api/useCardInfo'
-import { urls } from '../../constants/urls'
+import { baseUrl } from '../../constants/urls'
 import { Wrapper } from '../../ui/Wrapper'
 import { ProductInfo } from './info/ProductInfo'
 import { RelatedFigures } from './RelatedFigures'
@@ -12,7 +11,7 @@ export const Product = () => {
 
   const product = useCard(Number(id))
   const productInfo = product?.data.product
-  const productImage = urls.base + productInfo?.image
+  const productImage = baseUrl + productInfo?.image
   const relativeCards = product?.data.relatedProducts
 
   return (

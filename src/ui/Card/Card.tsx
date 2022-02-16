@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { colors } from '../../constants'
-import { urls } from '../../constants/urls'
+import { baseUrl } from '../../constants/urls'
 import { BuyButton } from '../BuyButton'
 import { ICard } from './CardInterface'
 
@@ -40,7 +40,7 @@ const Image = styled.img`
 `
 
 export const Card = ({ id, shortDescription, image, name, price }: ICard) => {
-  const imageUrl = urls.base + image
+  const imageUrl = baseUrl + image
 
   return (
     <Container>
