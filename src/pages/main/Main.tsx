@@ -1,59 +1,29 @@
 import React, { useCallback, useEffect } from 'react'
-import styled from 'styled-components'
 
 import { useCards } from '../../api/useCards'
 import { Card } from '../../ui/Card/Card'
-
-const MainHeaderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 784px;
-  margin-top: 160px;
-`
-
-const Title = styled.h1`
-  font-size: 6rem;
-  line-height: 112%;
-  text-align: center;
-  font-weight: 700;
-  margin: 0;
-`
-
-const TitleSpan = styled.p`
-  font-size: 2rem;
-  line-height: 142%;
-  font-weight: 600;
-  margin: 0;
-  margin-top: 48px;
-`
-
-const Grid = styled.div`
-  width: 100%;
-  max-width: 1600px;
-  margin: auto;
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(3, 1fr);
-`
+import { Grid } from '../../ui/Grid'
+import { MainHeaderContainer, Title, TitleSpan } from './MainComponents'
 
 export const Main = () => {
-  const { cards, size, setSize, incSize } = useCards()
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const { cards, size, setSize, totalPage } = useCards()
 
   const handleScroll = useCallback(() => {
     const startPagination =
       document.documentElement.scrollHeight - window.innerHeight - 50
 
     if (window.scrollY >= startPagination) {
-      incSize()
+      if (totalPage && size < totalPage) setSize(size + 1)
     }
-  }, [])
+  }, [totalPage, size])
+
+  useEffect(() => {
+    if (totalPage) {
+      window.addEventListener('scroll', handleScroll)
+
+      return () => window.removeEventListener('scroll', handleScroll)
+    }
+  }, [totalPage])
 
   return (
     <main>
@@ -66,6 +36,7 @@ export const Main = () => {
       <Grid>
         {cards?.map((item) => (
           <Card
+            key={item.id}
             id={item.id}
             image={item.image}
             name={item.name}

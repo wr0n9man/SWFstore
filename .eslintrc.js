@@ -61,7 +61,7 @@ module.exports = {
     ],
 
     'max-lines': ['error', 500],
-    // 'no-console': 'error',
+    'no-console': 'error',
     'object-shorthand': 'error',
     'no-unneeded-ternary': 'error',
     'no-nested-ternary': 'error',
